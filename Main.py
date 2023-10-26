@@ -3,6 +3,8 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 
+from Analizador import *
+
 
 
 class ScrollText(tk.Frame):
@@ -30,6 +32,9 @@ class ScrollText(tk.Frame):
     
     def delete(self, *args, **kwargs):
         return self.text.delete(*args, **kwargs)
+    
+    def get(self, *args, **kwargs):
+        return self.text.get(*args, **kwargs)
     
 
 class ScrollText2(tk.Frame):
@@ -84,7 +89,7 @@ class Ventana(tk.Tk):
         self.menu.add_command(label="Salir", command=self.quit)
 
         self.menu.add_command(label=" Abrir ", command=self.open_file)
-        self.menu.add_command(label=" Analizar ")
+        self.menu.add_command(label=" Analizar ", command=self.analizar_texto)
 
         self.menu.add_cascade(label=" Reportes ▼", menu=self.filemenu)
         self.filemenu.add_command(label="Rep. Tokens")
@@ -99,6 +104,10 @@ class Ventana(tk.Tk):
         if not filepath:
             return
         
+        self.scroll.delete(1.0,tk.END)
+        with open(filepath, "r") as input_file:
+            text = input_file.read()
+            self.scroll.insert(tk.END, text)
         # Se almacena la path
         self.path = filepath
         # Se muestra la direcion del archivo en la ventana
@@ -106,6 +115,10 @@ class Ventana(tk.Tk):
         # Mensaje de ingreso de archivo correcto
         self.mostrar_infoIngresoArchivo()
 
+    def analizar_texto(self):
+        text = self.scroll.get(1.0, tk.END)
+        analizar(text)
+        # implementar el analisis
 
     def mostrar_infoIngresoArchivo(self):
         messagebox.showinfo("Información", "Archivo Ingresado con Exito")
