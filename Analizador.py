@@ -1,16 +1,9 @@
 from collections import namedtuple
-#from Expresiones import *
-#from Expresiones.aritmeticas import ExpresionAritmetica
-#from Expresiones.trigonometricas import ExpresionTrigonometrica
-#from Graficas.Arbol import *
 
 from Error import Error
-import json
 
 # Estructura de token:
 Token = namedtuple("Token", ["value", "line", "col"])
-#gobalizacion:
-#global line, col
 # numero de linea
 line = 1
 # numero de columna
@@ -160,53 +153,53 @@ def tokenize_input(input_str):
     # for error in errores:
     #     print(error)
 
-    for tok in tokens:
-        print(tok)
+    # for tok in tokens:
+    #     print(tok)
 
 # crear las instrucciones a partir de los tokens
-def get_instruccion():
-    global tokens
-    operacion = None
-    value1 = None
-    value2 = None
-    while tokens:
-        token = tokens.pop(0)
-        #print("VALUE: ", token)
-        try:
-            if token.value == "operacion":
-                # eliminar el :
-                tokens.pop(0)
-                operacion = tokens.pop(0).value
-            elif token.value == "valor1":
-                # eliminar el :
-                tokens.pop(0)
-                value1 = tokens.pop(0).value
-                if value1 == "[":
-                    value1 = get_instruccion()
-            elif token.value == "valor2":
-                # eliminar el :
-                tokens.pop(0)
-                value2 = tokens.pop(0).value
-                if value2 == "[":
-                    value2 = get_instruccion()
-            elif token.value in ["texto", "fondo", "fuente", "forma"]:
-                tokens.pop(0)
-                configuracion[token.value] = tokens.pop(0).value
-            # else:
-            #     print("\033[1;31;40m Error: token desconocido:", token, "\033[0m")
-            temporal = str(operacion).lower()
+# def get_instruccion():
+#     global tokens
+#     operacion = None
+#     value1 = None
+#     value2 = None
+#     while tokens:
+#         token = tokens.pop(0)
+#         #print("VALUE: ", token)
+#         try:
+#             if token.value == "operacion":
+#                 # eliminar el :
+#                 tokens.pop(0)
+#                 operacion = tokens.pop(0).value
+#             elif token.value == "valor1":
+#                 # eliminar el :
+#                 tokens.pop(0)
+#                 value1 = tokens.pop(0).value
+#                 if value1 == "[":
+#                     value1 = get_instruccion()
+#             elif token.value == "valor2":
+#                 # eliminar el :
+#                 tokens.pop(0)
+#                 value2 = tokens.pop(0).value
+#                 if value2 == "[":
+#                     value2 = get_instruccion()
+#             elif token.value in ["texto", "fondo", "fuente", "forma"]:
+#                 tokens.pop(0)
+#                 configuracion[token.value] = tokens.pop(0).value
+#             # else:
+#             #     print("\033[1;31;40m Error: token desconocido:", token, "\033[0m")
+#             temporal = str(operacion).lower()
 
-            if temporal and value1 and value2:
-                return ExpresionAritmetica(temporal, value1, value2, 0, 0)
+#             if temporal and value1 and value2:
+#                 return ExpresionAritmetica(temporal, value1, value2, 0, 0)
             
-            #----agregar el coseno, tangente:------
-            if temporal and temporal in ["seno", "coseno", "tangente", "inverso"] and value1:
-                return ExpresionTrigonometrica(temporal, value1, 0, 0)
-        except Exception as e:
-            print()
-            #print("Error: en la funcion get_instruccion.")
-            continue
-    return None
+#             #----agregar el coseno, tangente:------
+#             if temporal and temporal in ["seno", "coseno", "tangente", "inverso"] and value1:
+#                 return ExpresionTrigonometrica(temporal, value1, 0, 0)
+#         except Exception as e:
+#             print()
+#             #print("Error: en la funcion get_instruccion.")
+#             continue
+#     return None
 
 # def create_instructions():
 #     global tokens
@@ -222,6 +215,7 @@ def get_instruccion():
 
 def analizar(entrada):
     errores.clear()
+    tokens.clear()
     tokenize_input(entrada)
     # arbol.dot.clear()
     # arbol.agregarConfiguracion(configuracion)
@@ -233,32 +227,3 @@ def analizar(entrada):
     # return arbol
 
 
-# def archivoDeSalida():
-#     # Lista para almacenar los objetos JSON de errores individuales
-#     errores_json = []
-
-#     # Convierte cada error en un diccionario JSON y agrégalo a la lista
-#     for i, error in enumerate(errores, start=1):
-#         error_dict = {
-#             "No": i,
-#             "descripcion": {
-#                 "lexema": error.lexema,
-#                 "tipo": error.tipo,
-#                 "columna": error.columna,
-#                 "fila": error.fila,
-#             },
-#         }
-#         errores_json.append(error_dict)
-
-#     # Crea el diccionario JSON final
-#     resultado_json = {"errores": errores_json}
-
-#     # Nombre del archivo de salida JSON
-#     nombre_archivo = "RESULTADOS_202101927.json"
-
-#     # Escribe el diccionario JSON en el archivo
-#     with open(nombre_archivo, "w") as archivo_json:
-#         json.dump(resultado_json, archivo_json, indent=4)
-
-#     # Mensaje de salida
-#     #print(f"Archivo JSON '{nombre_archivo}' creado con éxito.")

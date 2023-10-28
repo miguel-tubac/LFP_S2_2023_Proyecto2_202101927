@@ -1,2 +1,0 @@
-print(ord("'"))
-print(ord('"'))

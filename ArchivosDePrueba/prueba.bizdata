@@ -1,0 +1,40 @@
+Claves = [
+    "codigo","producto","precio_compra","precio_venta","stock"
+]
+Registos = [
+    {1, "Barbacoa", 10.50,20.00,6}
+    {2, "Arroz", 1.50, 3.00, 12}
+    {3, "Leche", 1.20, 2.40, 10}
+    {4, "Pan", 8.58, 1.00, 20}
+    {5, "Huevos", 2.58, 5.00, 15}
+    {6, "Pollo", 5.88, 10.00, 10}
+    {7, "Carne", 7.50, 15.00, 8}
+    {8, "Verduras", 2.80, 4.00, 14}
+    {9, "Frutas", 1.50, 3.08, 12}
+    {10, "Agua", 0.50, 1.00, 20}
+]
+
+#Prueba de Comentario de una linea
+'''
+Prueba de comentario de varias lineass
+'''
+"""
+Prueba de comentario de varias lineas
+"""
+
+imprimir("Pruebal"); 
+imprimirln("Prueba");
+imprimirln("Numero 2"); 
+imprimir(prueba error 1); 
+imprimirln("Pueba error 2")
+
+promedio("stock");
+promedio("producto");
+
+conteo();
+contarsi("stock", 2);
+datos();
+sumar("stock");
+max("precio_venta");
+min("precio_compra");
+exportarReporte("Reporte HTML de abarroteria");
